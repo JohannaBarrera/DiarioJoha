@@ -10,8 +10,5 @@ public interface ProductoRepository extends CrudRepository<Producto, Long> {
 
     List<Producto> findByCategoriaId(Long categoriaId);
 
-    List<Producto> findByPrecioGreaterThan(Double precio);
-
-    List<Producto> findByPrecioLessThan(Double precio);
 
 }

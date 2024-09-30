@@ -37,7 +37,7 @@ class ProductoControllerTest {
         producto = new Producto();
         producto.setId(1L);
         producto.setNombre("Producto 1");
-        producto.setPrecio(100.0);
+
     }
 
     @Test
