@@ -40,7 +40,7 @@ public class EntradaWebController {
         Entrada entrada = entradaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID de entrada inválido: " + id));
         model.addAttribute("entrada", entrada);
-        model.addAttribute("etiqueta", etiquetaRepository.findAll());
+        model.addAttribute("etiquetas", etiquetaRepository.findAll());
         return "entradas/formulario";
     }
 

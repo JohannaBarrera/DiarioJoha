@@ -23,6 +23,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Descripcion</th>
+                    <th>Fecha</th>
                     <th>Etiqueta</th>
 
                 </tr>
@@ -31,13 +32,16 @@
                 <tr th:each="entrada : ${entradas}">
                     <td th:text="${entrada.id}"></td>
                     <td th:text="${entrada.nombre}"></td>
+                    <td th:text="${entrada.fecha}"></td>
                     <td th:text="${entrada.etiqueta.nombre}"></td> <!-- Accediendo al nombre de la categoría -->
 
                     <td>
                         <button type="button" class="btn btn-warning btn-sm" 
-                        th:onclick="'window.location.href=\'/entradas/editar/'+${entrada.id}+'\''">Modificar</button>
+                        th:onclick="'window.location.href=\'/entradas/editar/'+${entrada.id}+'\''">
+                        <i class="fas fa-edit"></i></button>
                         <button type="button" class="btn btn-danger btn-sm" 
-                            th:onclick="'window.location.href=\'/entradas/eliminar/'+${entrada.id}+'\''">Delete</button>
+                            th:onclick="'window.location.href=\'/entradas/eliminar/'+${entrada.id}+'\''">
+                            <i class="fas fa-trash-alt"></i></button>
                     </td>
                 </tr>
             </tbody>
