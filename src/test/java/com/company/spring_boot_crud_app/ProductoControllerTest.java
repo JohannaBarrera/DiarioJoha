@@ -22,19 +22,19 @@ import static org.mockito.Mockito.*;
 class ProductoControllerTest {
 
     @Mock
-    private ProductoRepository productoRepository;
+    private EntradaRepository productoRepository;
 
     @Mock
-    private CategoriaRepository categoriaRepository;
+    private EtiquetaRepository categoriaRepository;
 
     @InjectMocks
-    private ProductoController productoController;
+    private EntradaController productoController;
 
-    private Producto producto;
+    private Entrada producto;
 
     @BeforeEach
     public void setUp() {
-        producto = new Producto();
+        producto = new Entrada();
         producto.setId(1L);
         producto.setNombre("Producto 1");
 
@@ -44,8 +44,8 @@ class ProductoControllerTest {
     void testObtenerTodos() {
         System.out.println("Ejecutando prueba: testObtenerTodos");
         when(productoRepository.findAll()).thenReturn(Arrays.asList(producto));
-        ResponseEntity<List<Producto>> responseEntity = productoController.obtenerTodos();
-        List<Producto> productos = responseEntity.getBody();
+        ResponseEntity<List<Entrada>> responseEntity = productoController.obtenerTodos();
+        List<Entrada> productos = responseEntity.getBody();
         
         System.out.println("Datos enviados a la API: []"); // No hay datos enviados en este caso
         System.out.println("Datos devueltos de la API: " + productos);
@@ -59,7 +59,7 @@ class ProductoControllerTest {
     void testObtenerPorId() {
         System.out.println("Ejecutando prueba: testObtenerPorId");
         when(productoRepository.findById(anyLong())).thenReturn(Optional.of(producto));
-        ResponseEntity<Producto> responseEntity = productoController.obtenerPorId(1L);
+        ResponseEntity<Entrada> responseEntity = productoController.obtenerPorId(1L);
         
         System.out.println("Datos enviados a la API: ID = 1");
         System.out.println("Datos devueltos de la API: " + responseEntity.getBody());
@@ -71,37 +71,37 @@ class ProductoControllerTest {
     @Test
     void testCrearProducto() {
         System.out.println("Ejecutando prueba: testCrearProducto");
-        when(productoRepository.save(any(Producto.class))).thenReturn(producto);
+        when(productoRepository.save(any(Entrada.class))).thenReturn(producto);
         
         System.out.println("Datos enviados a la API: " + producto);
-        ResponseEntity<Producto> response = productoController.crearProducto(producto);
+        ResponseEntity<Entrada> response = productoController.crearProducto(producto);
         System.out.println("Datos devueltos de la API: " + response.getBody());
 
         Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
         Assertions.assertEquals(producto, response.getBody());
-        verify(productoRepository, times(1)).save(any(Producto.class));
+        verify(productoRepository, times(1)).save(any(Entrada.class));
     }
 
     @Test
     void testActualizarProducto() {
         System.out.println("Ejecutando prueba: testActualizarProducto");
         when(productoRepository.existsById(anyLong())).thenReturn(true);
-        when(productoRepository.save(any(Producto.class))).thenReturn(producto);
+        when(productoRepository.save(any(Entrada.class))).thenReturn(producto);
         
         System.out.println("Datos enviados a la API: ID = 1, " + producto);
-        ResponseEntity<Producto> response = productoController.actualizarProducto(1L, producto);
+        ResponseEntity<Entrada> response = productoController.actualizarProducto(1L, producto);
         System.out.println("Datos devueltos de la API: " + response.getBody());
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals(producto, response.getBody());
-        verify(productoRepository, times(1)).save(any(Producto.class));
+        verify(productoRepository, times(1)).save(any(Entrada.class));
     }
 
     @Test
     void testActualizarProductoNoEncontrado() {
         System.out.println("Ejecutando prueba: testActualizarProductoNoEncontrado");
         when(productoRepository.existsById(anyLong())).thenReturn(false);
-        ResponseEntity<Producto> response = productoController.actualizarProducto(1L, producto);
+        ResponseEntity<Entrada> response = productoController.actualizarProducto(1L, producto);
         
         System.out.println("Datos enviados a la API: ID = 1, " + producto);
         System.out.println("Datos devueltos de la API: " + response.getStatusCode());
@@ -140,9 +140,9 @@ class ProductoControllerTest {
         System.out.println("Ejecutando prueba: testObtenerPorCategoria");
         when(categoriaRepository.existsById(anyLong())).thenReturn(true);
         when(productoRepository.findByCategoriaId(anyLong())).thenReturn(Arrays.asList(producto));
-        ResponseEntity<List<Producto>> response = productoController.obtenerPorCategoria(1L);
+        ResponseEntity<List<Entrada>> response = productoController.obtenerPorCategoria(1L);
         
-        List<Producto> productos = response.getBody();
+        List<Entrada> productos = response.getBody();
         System.out.println("Datos enviados a la API: Categoria ID = 1");
         System.out.println("Datos devueltos de la API: " + productos);
 

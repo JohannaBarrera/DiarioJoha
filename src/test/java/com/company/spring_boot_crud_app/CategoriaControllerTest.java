@@ -22,19 +22,19 @@ import static org.mockito.Mockito.*;
 class CategoriaControllerTest {
 
     @Mock
-    private CategoriaRepository categoriaRepository;
+    private EtiquetaRepository categoriaRepository;
 
     @Mock
-    private ProductoRepository productoRepository;
+    private EntradaRepository productoRepository;
 
     @InjectMocks
-    private CategoriaController categoriaController;
+    private EtiquetaController categoriaController;
 
-    private Categoria categoria;
+    private Etiqueta categoria;
 
     @BeforeEach
     public void setUp() {
-        categoria = new Categoria();
+        categoria = new Etiqueta();
         categoria.setId(1L);
         categoria.setNombre("Categoría 1");
     }
@@ -43,9 +43,9 @@ class CategoriaControllerTest {
     void testObtenerTodas() {
         System.out.println("Ejecutando prueba: testObtenerTodas");
         when(categoriaRepository.findAll()).thenReturn(Arrays.asList(categoria));
-        ResponseEntity<List<Categoria>> responseEntity = categoriaController.obtenerTodas();
+        ResponseEntity<List<Etiqueta>> responseEntity = categoriaController.obtenerTodas();
         
-        List<Categoria> categorias = responseEntity.getBody();
+        List<Etiqueta> categorias = responseEntity.getBody();
         System.out.println("Datos enviados a la API: []"); // No hay datos enviados en este caso
         System.out.println("Datos devueltos de la API: " + categorias);
 
@@ -58,7 +58,7 @@ class CategoriaControllerTest {
     void testObtenerPorId() {
         System.out.println("Ejecutando prueba: testObtenerPorId");
         when(categoriaRepository.findById(anyLong())).thenReturn(Optional.of(categoria));
-        ResponseEntity<Categoria> responseEntity = categoriaController.obtenerPorId(1L);
+        ResponseEntity<Etiqueta> responseEntity = categoriaController.obtenerPorId(1L);
         
         System.out.println("Datos enviados a la API: ID = 1");
         System.out.println("Datos devueltos de la API: " + responseEntity.getBody());
@@ -70,37 +70,37 @@ class CategoriaControllerTest {
     @Test
     void testCrearCategoria() {
         System.out.println("Ejecutando prueba: testCrearCategoria");
-        when(categoriaRepository.save(any(Categoria.class))).thenReturn(categoria);
+        when(categoriaRepository.save(any(Etiqueta.class))).thenReturn(categoria);
         
         System.out.println("Datos enviados a la API: " + categoria);
-        ResponseEntity<Categoria> response = categoriaController.crearCategoria(categoria);
+        ResponseEntity<Etiqueta> response = categoriaController.crearCategoria(categoria);
         System.out.println("Datos devueltos de la API: " + response.getBody());
 
         Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
         Assertions.assertEquals(categoria, response.getBody());
-        verify(categoriaRepository, times(1)).save(any(Categoria.class));
+        verify(categoriaRepository, times(1)).save(any(Etiqueta.class));
     }
 
     @Test
     void testActualizarCategoria() {
         System.out.println("Ejecutando prueba: testActualizarCategoria");
         when(categoriaRepository.existsById(anyLong())).thenReturn(true);
-        when(categoriaRepository.save(any(Categoria.class))).thenReturn(categoria);
+        when(categoriaRepository.save(any(Etiqueta.class))).thenReturn(categoria);
         
         System.out.println("Datos enviados a la API: ID = 1, " + categoria);
-        ResponseEntity<Categoria> response = categoriaController.actualizarCategoria(1L, categoria);
+        ResponseEntity<Etiqueta> response = categoriaController.actualizarCategoria(1L, categoria);
         System.out.println("Datos devueltos de la API: " + response.getBody());
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
         Assertions.assertEquals(categoria, response.getBody());
-        verify(categoriaRepository, times(1)).save(any(Categoria.class));
+        verify(categoriaRepository, times(1)).save(any(Etiqueta.class));
     }
 
     @Test
     void testActualizarCategoriaNoEncontrada() {
         System.out.println("Ejecutando prueba: testActualizarCategoriaNoEncontrada");
         when(categoriaRepository.existsById(anyLong())).thenReturn(false);
-        ResponseEntity<Categoria> response = categoriaController.actualizarCategoria(1L, categoria);
+        ResponseEntity<Etiqueta> response = categoriaController.actualizarCategoria(1L, categoria);
         
         System.out.println("Datos enviados a la API: ID = 1, " + categoria);
         System.out.println("Datos devueltos de la API: " + response.getStatusCode());
@@ -127,7 +127,7 @@ class CategoriaControllerTest {
     void testEliminarCategoriaConProductosAsociados() {
         System.out.println("Ejecutando prueba: testEliminarCategoriaConProductosAsociados");
         when(categoriaRepository.existsById(anyLong())).thenReturn(true);
-        when(productoRepository.findByCategoriaId(anyLong())).thenReturn(Arrays.asList(new Producto()));
+        when(productoRepository.findByCategoriaId(anyLong())).thenReturn(Arrays.asList(new Entrada()));
         
         System.out.println("Datos enviados a la API: ID = 1");
         ResponseEntity<Void> response = categoriaController.eliminarCategoria(1L);
@@ -140,10 +140,10 @@ class CategoriaControllerTest {
     void testObtenerProductosPorCategoria() {
         System.out.println("Ejecutando prueba: testObtenerProductosPorCategoria");
         when(categoriaRepository.existsById(anyLong())).thenReturn(true);
-        when(productoRepository.findByCategoriaId(anyLong())).thenReturn(Arrays.asList(new Producto()));
+        when(productoRepository.findByCategoriaId(anyLong())).thenReturn(Arrays.asList(new Entrada()));
         
         System.out.println("Datos enviados a la API: Categoria ID = 1");
-        ResponseEntity<List<Producto>> response = categoriaController.obtenerProductosPorCategoria(1L);
+        ResponseEntity<List<Entrada>> response = categoriaController.obtenerProductosPorCategoria(1L);
         System.out.println("Datos devueltos de la API: " + response.getStatusCode());
 
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());

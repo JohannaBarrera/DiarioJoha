@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CategoriaRepository extends CrudRepository<Categoria, Long> {
-    List<Categoria> findByNombre(String nombre);
+public interface EtiquetaRepository extends CrudRepository<Etiqueta, Long> {
+    List<Etiqueta> findByNombre(String nombre);
 }

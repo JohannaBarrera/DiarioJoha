@@ -5,10 +5,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductoRepository extends CrudRepository<Producto, Long> {
-    List<Producto> findByNombre(String nombre);
+public interface EntradaRepository extends CrudRepository<Entrada, Long> {
+    List<Entrada> findByNombre(String nombre);
 
-    List<Producto> findByCategoriaId(Long categoriaId);
+    List<Entrada> findByEtiquetaId(Long etiquetaId);
 
 
 }

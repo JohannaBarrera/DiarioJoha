@@ -25,12 +25,12 @@ public class WebSecurityConfig {
 		http
 			.authorizeHttpRequests((requests) -> requests
 				.requestMatchers("/", "/home").permitAll()
-				.requestMatchers("/productos").authenticated()
+				.requestMatchers("/entradas").authenticated()
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
 				.loginPage("/login")
-				.defaultSuccessUrl("/productos", true)
+				.defaultSuccessUrl("/entradas", true)
 				.permitAll()
 			)
 			.logout((logout) -> logout.permitAll());

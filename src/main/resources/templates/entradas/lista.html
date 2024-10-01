@@ -2,6 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 
 <head>
+    <style>
+        h1{ text-align: center;}
+        a{ text-align: left}
+    </style>
     <title>Diario</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,27 +15,28 @@
 <body>
     <div class="container mt-5">
         <h1>Diario   </h1>
-        <a href="/productos/nuevo" class="btn btn-primary mb-3">Nueva Nota</a>
+        <a href="/entradas/nuevo" class="btn btn-primary mb-3 float-end">
+            <i class="fas fa-plus-circle"></i> Nueva nota</a>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Descripcion</th>
-                    <th>Categoria</th>
+                    <th>Etiqueta</th>
 
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="producto : ${productos}">
-                    <td th:text="${producto.id}"></td>
-                    <td th:text="${producto.nombre}"></td>
-                    <td th:text="${producto.categoria.nombre}"></td> <!-- Accediendo al nombre de la categoría -->
+                <tr th:each="entrada : ${entradas}">
+                    <td th:text="${entrada.id}"></td>
+                    <td th:text="${entrada.nombre}"></td>
+                    <td th:text="${entrada.etiqueta.nombre}"></td> <!-- Accediendo al nombre de la categoría -->
 
                     <td>
                         <button type="button" class="btn btn-warning btn-sm" 
-                        th:onclick="'window.location.href=\'/productos/editar/'+${producto.id}+'\''">Editar</button>
+                        th:onclick="'window.location.href=\'/entradas/editar/'+${entrada.id}+'\''">Modificar</button>
                         <button type="button" class="btn btn-danger btn-sm" 
-                            th:onclick="'window.location.href=\'/productos/eliminar/'+${producto.id}+'\''">Eliminar</button>
+                            th:onclick="'window.location.href=\'/entradas/eliminar/'+${entrada.id}+'\''">Delete</button>
                     </td>
                 </tr>
             </tbody>

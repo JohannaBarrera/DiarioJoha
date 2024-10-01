@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <title th:text="${entrada.id} ? 'Editar Nota' : 'Nueva Nota'"></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 th:if="${entrada.id != null}" th:text="'Editar Nota'">Editar Nota</h1>
+        <h1 th:if="${entrada.id == null}" th:text="'Nueva Nota'">Nueva Nota</h1>
+        <form th:action="${entrada.id} ? @{/entradas/editar/{id}(id=${entrada.id})} : @{/entradas/nuevo}" th:object="${entrada}" method="post">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+            </div>
+
+
+            <div class="mb-3">
+                <label for="etiqueta" class="form-label">etiqueta</label>
+                <select class="form-select" id="etiqueta" th:field="*{etiqueta}">
+                    <option th:each="etiqueta : ${etiquetas}" th:value="${etiqueta.id}" th:text="${etiqueta.nombre}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="/entradas" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>
+
+
+
+

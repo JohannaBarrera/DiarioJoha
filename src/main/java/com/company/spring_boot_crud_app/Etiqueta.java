@@ -5,9 +5,9 @@ import lombok.Data;
 import java.util.List;
 
 @Entity
-@Table(name = "categorias")
+@Table(name = "etiquetas")
 @Data
-public class Categoria {
+public class Etiqueta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,12 +15,12 @@ public class Categoria {
     @Column(nullable = false)
     private String nombre;
 
-    @OneToMany(mappedBy = "categoria")
-    private List<Producto> productos;
+    @OneToMany(mappedBy = "etiqueta")
+    private List<Entrada> entradas;
 
     @Override
     public String toString() {
-        return "Categoria{" +
+        return "Etiqueta{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 '}';
